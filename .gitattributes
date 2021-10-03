@@ -1,0 +1,2 @@
+*.cmd linguist-detectabale=false
+*.java linguist-detectable=false
