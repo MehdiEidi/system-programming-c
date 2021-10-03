@@ -1,1 +1,0 @@
-cmd_/home/mehdi/Workspace/C/Silber/osc10e/ch2/hello.ko := ld -r -m elf_x86_64 --build-id=sha1  -T scripts/module.lds -o /home/mehdi/Workspace/C/Silber/osc10e/ch2/hello.ko /home/mehdi/Workspace/C/Silber/osc10e/ch2/hello.o /home/mehdi/Workspace/C/Silber/osc10e/ch2/hello.mod.o;  true
