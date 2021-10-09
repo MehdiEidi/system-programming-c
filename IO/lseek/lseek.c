@@ -3,6 +3,8 @@
 #include <fcntl.h>
 
 int main(void) {
+    int fd;
+    
     off_t ret = lseek(fd, (off_t) 1825, SEEK_SET);
     if (ret == (off_t) -1) {
         // handle the error
