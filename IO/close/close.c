@@ -10,4 +10,6 @@ int main(void) {
     if (close(fd) == -1) {
         // handle close error
     }
+
+    return 0;
 }
