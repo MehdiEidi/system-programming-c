@@ -14,3 +14,12 @@ int main(void) {
 
     pthread_join(tid, NULL);
 }
+
+void worker() {
+    while (1) {
+        // do some work for a while
+
+        // check if there is a cancellation request
+        pthread_testcancel();
+    }
+}
