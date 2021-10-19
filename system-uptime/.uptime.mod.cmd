@@ -1,0 +1,1 @@
+cmd_/home/mehdi/Workspace/C/system-programming-c/system-uptime/uptime.mod := { echo  /home/mehdi/Workspace/C/system-programming-c/system-uptime/uptime.o;  echo; } > /home/mehdi/Workspace/C/system-programming-c/system-uptime/uptime.mod

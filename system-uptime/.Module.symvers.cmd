@@ -1,0 +1,1 @@
+cmd_/home/mehdi/Workspace/C/system-programming-c/system-uptime/Module.symvers := sed 's/ko$$/o/' /home/mehdi/Workspace/C/system-programming-c/system-uptime/modules.order | scripts/mod/modpost -m -a   -o /home/mehdi/Workspace/C/system-programming-c/system-uptime/Module.symvers -e -i Module.symvers   -T -
