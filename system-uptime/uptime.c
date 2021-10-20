@@ -7,13 +7,13 @@
 #include <asm/uaccess.h>
 
 #define PROC_NAME "uptime_mod"
+#define INITIAL_JIFFIES 0xfffedb08
 
 static ssize_t proc_read(struct file *file, char *buf, size_t count, loff_t *pos);
 
 static struct proc_ops fproc_ops = {
-        .proc_read = proc_read,
+    .proc_read = proc_read,
 };
-
 
 // mod_init runs when module loads on the kernel
 static int mod_init(void) {
@@ -33,7 +33,7 @@ static void mod_exit(void) {
 
 static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos) {
     long long seconds;
-    seconds = (jiffies - 0xfffedb08) / HZ;
+    seconds = (jiffies - INITIAL_JIFFIES) / HZ;
 
     char buffer[100];
     int r = 0;
@@ -52,10 +52,10 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
     int s;
 
     m = seconds / 60;
-    s = seconds - (seconds / 60) * 60;
+    s = seconds - m * 60;
 
     h = m / 60;
-    m = m - (m / 60) * 60;
+    m = m - h * 60;
 
     r = snprintf(buffer, 100, "%d hours %d minutes %d seconds passed...\n", h, m, s, seconds);
 
