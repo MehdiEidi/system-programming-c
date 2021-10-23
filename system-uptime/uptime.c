@@ -7,7 +7,6 @@
 #include <asm/uaccess.h>
 
 #define PROC_NAME "uptime_mod"
-#define INITIAL_JIFFIES 0xfffedb08
 
 static ssize_t proc_read(struct file *file, char *buf, size_t count, loff_t *pos);
 
