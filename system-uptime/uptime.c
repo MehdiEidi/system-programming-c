@@ -6,6 +6,7 @@
 #include <linux/proc_fs.h>
 #include <asm/uaccess.h>
 
+// name of the /proc entry that will be created by loading the module.
 #define PROC_NAME "uptime_mod"
 
 static ssize_t proc_read(struct file *file, char *buf, size_t count, loff_t *pos);
@@ -30,6 +31,7 @@ static void mod_exit(void) {
     printk( KERN_INFO "/proc/%s removed\n", PROC_NAME);
 }
 
+// proc_read will be called when the /proc entry created by the module is been called.
 static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, loff_t *pos) {
     long long seconds;
     seconds = (jiffies - INITIAL_JIFFIES) / HZ;
@@ -46,6 +48,7 @@ static ssize_t proc_read(struct file *file, char __user *usr_buf, size_t count, 
 
     completed = 1;
 
+    // logic below will convert the seconds to more readable hour/minute/second format.
     int m;
     int h;
     int s;
