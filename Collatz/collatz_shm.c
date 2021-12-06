@@ -38,6 +38,7 @@ int main(int argc, char **argv) {
     }
 
     pid_t pid = fork();
+    
     if (pid < 0) {
         perror("error - fork failed\n");
         return errno;
