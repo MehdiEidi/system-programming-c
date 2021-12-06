@@ -5,36 +5,32 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 
-void* create_shared_memory(size_t size);
 float time_diff(struct timeval *start, struct timeval *end);
 
-int main(int argc, char **argv) {       
-    // extract command
-    char* cmd[argc-1];
-    for (int i = 0; i < argc-1; i++) {
-        cmd[i] = argv[i+1];
-    }
-    
+int main(int argc, char **argv) {          
     int pipe_fd[2];
 
     if (pipe(pipe_fd) == -1) {
-        printf("Error - pipe failed");
-        return 1;
+        printf("error - pipe failed");
+        return errno;
     }
 
     int pid = fork();
 
     if (pid == -1) {
-        printf("Error - fork failed");
-        return 1;
+        printf("rrror - fork failed");
+        return errno;
     } else if (pid == 0) {
         struct timeval cur;
         gettimeofday(&cur, NULL);
         
         write(pipe_fd[1], &cur, sizeof(cur));
 
-        execvp(cmd[0], cmd);
+        execvp(argv[1], &argv[1]);
+
+        exit(0);
     } else {
         wait(NULL);
 
@@ -45,20 +41,12 @@ int main(int argc, char **argv) {
         read(pipe_fd[0], buf, sizeof(buf));
 
         printf("\n\nElapsed Time: %f seconds\n", time_diff(buf, &cur));
+
+        close(pipe_fd[0]);
+        close(pipe_fd[1]);
     }
 
     return 0;
-}
-
-// create_shared_memory creates and returns an in-memory buffer which can be shared.
-void* create_shared_memory(size_t size) {
-    // shm will be readable and writable
-    int prot = PROT_READ | PROT_WRITE;
-
-    // shm will be shared but anonymous, so only parent and child will be able to use it 
-    int visibilty = MAP_ANONYMOUS | MAP_SHARED;
-
-    return mmap(NULL, size, prot, visibilty, -1, 0);
 }
 
 // time_diff returns the difference of start and end times.
