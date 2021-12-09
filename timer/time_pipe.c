@@ -13,14 +13,14 @@ int main(int argc, char **argv) {
     int pipe_fd[2];
 
     if (pipe(pipe_fd) == -1) {
-        printf("error - pipe failed");
+        printf("error - pipe failed\n");
         return errno;
     }
 
     int pid = fork();
 
     if (pid == -1) {
-        printf("rrror - fork failed");
+        printf("error - fork failed\n");
         return errno;
     } else if (pid == 0) {
         struct timeval cur;
@@ -37,10 +37,10 @@ int main(int argc, char **argv) {
         struct timeval cur;
         gettimeofday(&cur, NULL);
 
-        char buf[20];
-        read(pipe_fd[0], buf, sizeof(buf));
+        struct timeval start;
+        read(pipe_fd[0], &start, sizeof(start));
 
-        printf("\n\nElapsed Time: %f seconds\n", time_diff(buf, &cur));
+        printf("\n\nElapsed Time: %f seconds\n", time_diff(&start, &cur));
 
         close(pipe_fd[0]);
         close(pipe_fd[1]);
@@ -51,5 +51,5 @@ int main(int argc, char **argv) {
 
 // time_diff returns the difference of start and end times.
 float time_diff(struct timeval *start, struct timeval *end){
-    return (end->tv_sec - start->tv_sec) + 1e-6*(end->tv_usec - start->tv_usec);
+    return (end->tv_sec - start->tv_sec) + 1e-6 *(end->tv_usec - start->tv_usec);
 }

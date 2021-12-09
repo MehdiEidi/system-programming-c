@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
         return errno;
     } else if (pid == 0) {
         // memory map the shm to the child process's address space
-        char *ptr = (char*) mmap(0, 200 * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+        struct timeval *ptr = (struct timeval *) mmap(0, 200 * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
         if (ptr == MAP_FAILED) {
             perror("error - mmap failed");
@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
         wait(NULL);
         
         // memory map the shm to the parent process's address space
-        char *ptr = (char*) mmap(0, 200 * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
+        struct timeval *ptr = (struct timeval *) mmap(0, 200 * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
         struct timeval cur;
         gettimeofday(&cur, NULL);
@@ -68,5 +68,5 @@ int main(int argc, char **argv) {
 
 // time_diff returns the difference of start and end times.
 float time_diff(struct timeval *start, struct timeval *end){
-    return (end->tv_sec - start->tv_sec) + 1e-6*(end->tv_usec - start->tv_usec);
+    return (end->tv_sec - start->tv_sec) + 1e-6* (end->tv_usec - start->tv_usec);
 }
