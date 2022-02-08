@@ -1,2 +1,2 @@
 # system-programming-c
-This repo is about beloved C and System programming.
+This repo contains my journey in learning about systems programming.
